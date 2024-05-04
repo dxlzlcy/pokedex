@@ -32,11 +32,12 @@ window.onload = async function(){
                 activeItem.style.backgroundColor='white';
             }
             activeItem = this;
-
         })
+        if(i==2){
+            pokemonList.firstChild.click();
+        }
         pokemonList.append(div);
     }
-    pokemonList.firstChild.click();
 
 }
 
