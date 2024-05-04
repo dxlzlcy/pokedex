@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokedex Display</title>
+<style>
+    h3{
+        height:100px;
+    }
+    #pokedexList {
+        max-height: 300px; /* 限制最大高度 */
+        overflow-y: auto; /* 添加垂直滚动条 */
+        border: 1px solid #ccc; /* 添加边框 */
+        padding: 20px; /* 内边距 */
+    }
+
+    #content{
+        display: flex;
+    }
+
+    #left{
+        background-color: green;
+        width:250px;
+    }
+
+    #right{
+        background-color: yellow;
+        width:250px;
+        height:500px;
+        padding:20px;
+    }
+</style>
+</head>
+<body>
+    <div id="content">
+        <div id="left">
+            <h3>Pokemon Names</h3>
+            <ul id="pokedexList"></ul>
+        </div>
+        <div id="right">
+            <div id="name"></div>
+            <div id="types"></div>
+            <img src="" alt="" id="img">
+            <div id="desc"></div>
+        </div>
+    </div>
+
+
+<script>
+    let activeItem = null;
+    fetch('pokedex.json')
+    .then(response => response.json())
+    .then(data => {
+        const list = document.getElementById('pokedexList');
+        Object.values(data).forEach(pokemon => {
+            const listItem = document.createElement('li');
+            listItem.textContent = pokemon.num + '.' + pokemon.zh_name;
+            listItem.addEventListener('click',function(){
+                document.getElementById('name').innerHTML=pokemon['zh_name']+'<br>'+pokemon['en_name'];
+                document.getElementById('img').src=pokemon.pokemonImg;
+                document.getElementById('desc').innerHTML=pokemon.zh_desc.flavor_text + '<br>' + pokemon.en_desc.flavor_text;
+
+                this.style.backgroundColor='yellow';
+                if(activeItem && activeItem!==this){
+                    activeItem.style.backgroundColor='green';
+                }
+                activeItem=this;
+
+            });
+            list.appendChild(listItem);
+        });
+    })
+    //.catch(error => console.error('Failed to load JSON:', error));
+    function showInfo(pokemon){
+        console.log('hi');
+        
+    }
+</script>
+</body>
+</html>
