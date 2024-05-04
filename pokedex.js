@@ -2,6 +2,7 @@ const pokemonCount = 151;
 var pokedex={};
 let pokemon; 
 let pokemonJson;
+let activeItem
 
 window.onload = async function(){
     for(let i=1;i<=pokemonCount;i++){
@@ -10,7 +11,7 @@ window.onload = async function(){
         div.classList.add('pokemonName');
         div.id = i;
         div.innerText = i + '.' + pokedex[i].zh_name;
-        div.addEventListener('click',()=>{
+        div.addEventListener('click',function(){
             pokemonImg.src = pokedex[i].pokemonImg;
             pokemonImgBack.src = pokedex[i].pokemonImgBack;
             while(pokemonTypes.firstChild){
@@ -26,6 +27,11 @@ window.onload = async function(){
             }
             pokemonDescription.innerHTML = pokedex[i].zh_desc.flavor_text + '<br>' + pokedex[i].en_desc.flavor_text
             pokemonName.innerHTML = i+'.' + pokedex[i].zh_name + '<br>' + pokedex[i].en_name;
+            this.style.backgroundColor='cyan';
+            if(activeItem && activeItem!=this){
+                activeItem.style.backgroundColor='white';
+            }
+            activeItem = this;
 
         })
         pokemonList.append(div);
